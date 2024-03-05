@@ -1,3 +1,5 @@
+'use client';
+
 import { IconType } from "react-icons";
 
 interface ButtonProps{
@@ -9,16 +11,32 @@ interface ButtonProps{
     icon?: IconType
 }
 
+
+/**
+ * 
+ * @param label - the label of the button
+ * @param onClick - either the button was been click or not
+ * @param disabled - button has been disabled due to submit
+ * @param outline - true: background of button is white and text is black
+ * @param outline - false: background of button is cyan and text is white 
+ * @param small - true: the button is small size
+ * @param small - false: button is medium size
+ * @param Icon - the Icon that will be pass that will be put on the left size of the button
+ * @returns 
+ */
 const Button: React.FC<ButtonProps> = ({
     label,
     onClick,
     disabled,
     outline,
     small,
-    icon
+    icon: Icon
 }) =>{
     return(
-        <button className={`
+        <button 
+        onClick={onClick}
+        disabled={disabled}
+        className={`
             relative
             disabled:opacity-70
             disabled:cursor-not-allowed
@@ -35,6 +53,16 @@ const Button: React.FC<ButtonProps> = ({
             ${small ? 'border-[1px]' : 'border-2'}
         `}
         >
+            {Icon && (
+                <Icon 
+                    size={24}
+                    className="
+                        absolute
+                        left-4
+                        top-3
+                    "
+                />
+            )}
             {label}
 
         </button>
