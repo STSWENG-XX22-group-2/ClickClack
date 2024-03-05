@@ -1,0 +1,38 @@
+name: Node.js CI
+
+on:
+  push:
+    branches:
+      - Production
+  pull_request:
+    branches:
+      - Production
+
+env:
+  DATABASE_URL: "https://fake.com"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '20'
+
+    - name: Install Dependencies
+      run: npm ci
+
+    - name: TypeScript Type Checking
+      run: npm run typecheck
+
+    - name: Linting
+      run: npm run lint
+      
+    #- name: Run Tests
+      #run: npm test
+    - name: run build
+      run: npm run build
