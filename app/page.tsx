@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
   return (
-    <div className="text-2xl">hello</div>
+    <div className="text-2xl">Page.tsx</div>
   );
 }
 if (import.meta.vitest) {
