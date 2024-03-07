@@ -27,6 +27,8 @@ import { useRouter } from 'next/navigation';
 const LoginModal = () =>{
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
+
+
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const {
@@ -61,6 +63,13 @@ const LoginModal = () =>{
         })
     }   
 
+    const toggle = useCallback(()=>{
+        loginModal.onClose();
+        registerModal.onOpen();
+    }, [loginModal,registerModal]);
+
+
+    
     const bodyContent = (
         <div className="flex flex-col gap-4">
             <Heading 
@@ -113,13 +122,13 @@ const LoginModal = () =>{
             ">
                 <div className="justify-center flex flex-row items-center gap-2">
                     <div>
-                        already have an account?
+                        First time using ClickClack?
                     </div>
                     <div 
-                        onClick={registerModal.onClose}
+                        onClick={toggle}
                         className="text-neutral-800 cursor-pointer hover:underline"
                     >
-                        Login
+                        Create an Account
                     </div>
                 </div>
             </div>
