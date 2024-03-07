@@ -24,29 +24,6 @@ const Search = () =>{
             >
                 <div
                     className="
-                        test-sm
-                        font-semibold
-                        px-6
-                    "
-                >
-                    anywhere
-                </div>
-                <div
-                    className="
-                        hidden
-                        sm:block
-                        text-sm
-                        font-semibold
-                        px-6
-                        border-x-[1px]
-                        flex-1
-                        text-center
-                    "
-                >
-                    any week
-                </div>
-                <div
-                    className="
                         text-sm
                         pl-6
                         pr-2
@@ -57,7 +34,7 @@ const Search = () =>{
                         gap-3
                     "
                 >
-                    <div className="hidden sm:block">Add Guests</div>
+                    <div className="hidden sm:block">Search Post</div>
                     <div
                         className="
                             p-2
