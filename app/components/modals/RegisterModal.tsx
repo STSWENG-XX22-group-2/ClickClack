@@ -91,12 +91,14 @@ const RegisterModal = () =>{
                 label="continue with Google"
                 icon={FcGoogle}
                 onClick={()=>{}}
+                disabled
             />
             <Button 
                 outline
                 label="continue with Github"
                 icon={AiFillGithub}
                 onClick={()=>{}}
+                disabled
             />
             <div className="
                 text-neutral-500
