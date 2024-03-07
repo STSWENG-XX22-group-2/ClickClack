@@ -7,6 +7,7 @@ import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
 import { FieldValues, useForm } from "react-hook-form";
+import ImageUpload from "../inputs/ImageUpload";
 
 enum STEPS{
     Category=0,
@@ -16,7 +17,7 @@ enum STEPS{
 
 const RentModal = () =>{
     const rentModal = useRentModal();
-
+    
     const [step, setStep] = useState(STEPS.Category);
 
 
@@ -37,8 +38,10 @@ const RentModal = () =>{
             description: '',
         }
     });
-
     const category = watch('category');
+    const imageSrc = watch('imageSrc');
+
+
 
     const setCustomValue = (id: string, value: any) =>{
         setValue(id, value, {
@@ -92,11 +95,25 @@ const RentModal = () =>{
         </div>
     )
 
+    if (step === STEPS.IMAGES){
+        bodyContent=(
+            <div className="flex flex-col gap-8">
+                <Heading 
+                    title="upload your Image"
+                    subtitle="upload png or jpeg format only"
+                />
+                <ImageUpload 
+                    value={imageSrc}
+                    onChange={(value) => setCustomValue('imageSrc', value)}
+                />
+            </div>
+        )
+    }
     return (
         <Modal
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={rentModal.onClose}
+            onSubmit={onNext}
             actionLabel={actionlabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.Category ? undefined : onBack}
