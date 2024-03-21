@@ -6,8 +6,12 @@ import { useMemo, useState } from "react";
 import Heading from "../Heading";
 import { categories } from "../navbar/Categories";
 import CategoryInput from "../inputs/CategoryInput";
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import ImageUpload from "../inputs/ImageUpload";
+import Input from "../inputs/Input";
+import axios from "axios";
+import {toast} from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 enum STEPS{
     Category=0,
@@ -16,10 +20,12 @@ enum STEPS{
 }
 
 const RentModal = () =>{
+
+    const router = useRouter();
     const rentModal = useRentModal();
     
     const [step, setStep] = useState(STEPS.Category);
-
+    const [isLoading, setIsLoading] = useState(false)
 
     const {
         register,
@@ -59,6 +65,26 @@ const RentModal = () =>{
         setStep((value) => value + 1);
     };
 
+    const onSubmit: SubmitHandler<FieldValues> = (data) =>{
+        if(step !== STEPS.DESCRIPTION){
+            return onNext();
+        }
+        setIsLoading(true)
+        axios.post('/api/listings', data)
+        .then(()=>{
+            toast.success("Added your post")
+            router.refresh();
+            reset();
+            setStep(STEPS.Category);
+            rentModal.onClose();
+        })
+        .catch(()=>{
+            toast.error("Something went wrong");
+        })
+        .finally(()=>{
+            setIsLoading(false);
+        })
+    }
     const actionlabel = useMemo(()=>{
         if(step === STEPS.DESCRIPTION){
             return 'Post';
@@ -109,11 +135,41 @@ const RentModal = () =>{
             </div>
         )
     }
+
+    if (step === STEPS.DESCRIPTION){
+        bodyContent=(
+            <div className="flex flex-col gap-8">
+                <Heading
+                    title="Describe your build/part/component"
+                    subtitle="feel free to make it short or very long"    
+                />
+                <Input 
+                    id="title"
+                    label="Title"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+                <hr />
+                <Input 
+                    id="description"
+                    label="Description"
+                    disabled={isLoading}
+                    register={register}
+                    errors={errors}
+                    required
+                />
+            </div>
+            
+
+        )
+    }
     return (
         <Modal
             isOpen={rentModal.isOpen}
             onClose={rentModal.onClose}
-            onSubmit={onNext}
+            onSubmit={handleSubmit(onSubmit)}
             actionLabel={actionlabel}
             secondaryActionLabel={secondaryActionLabel}
             secondaryAction={step === STEPS.Category ? undefined : onBack}
