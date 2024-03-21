@@ -9,7 +9,7 @@ import {ImPowerCord} from "react-icons/im";
 import {PiComputerTowerBold} from "react-icons/pi";
 import CategoryBox from "../CategoryBox";
 import { usePathname, useSearchParams } from "next/navigation";
-
+import { FaRegKeyboard, FaMouse  } from "react-icons/fa";
 
 export const categories = [
     {
@@ -51,6 +51,16 @@ export const categories = [
         label: "Case",
         icon: PiComputerTowerBold,
         description: "The case houses and protects all your PC components.",
+    },
+    {
+        label: "Mouse",
+        icon: FaMouse,
+        description: "A mouse lets you press buttons or apps in your desktop",
+    },
+    {
+        label: "Keyboard",
+        icon: FaRegKeyboard,
+        description: "A keyboard lets you type or command your pc",
     },
 ];
 
